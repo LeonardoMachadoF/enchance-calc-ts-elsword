@@ -15,3 +15,10 @@ export function getAverage(arr: number[]) {
     const average = sum / arr.length;
     return average;
 }
+
+export function getPercentAboveXInFluorite(fluoriteValues: number[], nLimit: number) {
+    const valoresAcimaDoLimite = fluoriteValues.filter(valor => valor > nLimit);
+    const porcentagemAcimaDoLimite = (valoresAcimaDoLimite.length / fluoriteValues.length) * 100;
+
+    return porcentagemAcimaDoLimite;
+}
