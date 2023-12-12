@@ -1,17 +1,50 @@
 import { getAverage, getMedian, getPercentAboveXInFluorite, sortArray } from "./utils";
 import { EServer } from './enums/EServer';
+import { infoToEnhanceProps } from "./types/InfoToEnhanceProps";
 
-let refino = 10;
+let refino = 8;
 let fluorite = 0;
 let crystal = 0;
 let blessedScroll = 0;
+const upgradeToNineChance = 0.042;
+const upgradeToTenChance = 0.021;
 const upgradeToElevenChance = 0.007;
 const upgradeToTwelveChanceWithHammer = 0.021;
+const destroyToNineChance = 0.2;
+const destroyToTenChance = 0.25;
 const destroyToElevenChance = 0.353;
 const destroyToTwelveChance = 0.25;
 const downgradeToElevenChance = 0.27;
+const allChancesTo09: { fluorite: number, blessedScroll: number }[] = [];
+const allChancesTo10: { fluorite: number, blessedScroll: number }[] = [];
 const allChancesTo11: { fluorite: number, blessedScroll: number }[] = [];
 const allChancesTo12: { fluorite: number, crystal: number, blessedScroll: number }[] = [];
+
+const getNine: (server: EServer) => void = (server) => {
+    while (refino === 8) {
+        fluorite++;
+        const chance = Math.random();
+        if (chance <= upgradeToNineChance) {
+            refino = 10;
+            allChancesTo09.push({ fluorite, blessedScroll });
+        } else if (chance <= upgradeToNineChance + destroyToNineChance && server === EServer.OFFICIAL) {
+            blessedScroll++;
+        }
+    }
+}
+
+const getTen: (server: EServer) => void = (server) => {
+    while (refino === 9) {
+        fluorite++;
+        const chance = Math.random();
+        if (chance <= upgradeToTenChance) {
+            refino = 10;
+            allChancesTo10.push({ fluorite, blessedScroll });
+        } else if (chance <= upgradeToTenChance + destroyToTenChance && server === EServer.OFFICIAL) {
+            blessedScroll++;
+        }
+    }
+}
 
 const getEleven: (server: EServer) => void = (server) => {
     while (refino === 10) {
@@ -46,12 +79,6 @@ const getTwelve: (server: EServer) => void = (server) => {
     }
 }
 
-interface infoToEnhanceProps {
-    numberOfCases: number,
-    server: EServer,
-    nLimitFluorite: number
-}
-
 const showUpgradeToTwelveInfoWithNSimulations = ({ server, numberOfCases, nLimitFluorite }: infoToEnhanceProps) => {
     for (let i = 0; i < numberOfCases; i++) {
         refino = 10;
@@ -65,6 +92,7 @@ const showUpgradeToTwelveInfoWithNSimulations = ({ server, numberOfCases, nLimit
     const crystalValues = allChancesTo12.map(item => item.crystal);
     const blessedScrollValues = allChancesTo12.map(item => item.blessedScroll);
 
+    console.log(EServer.OFFICIAL ? "SERVER OFICIAL" : "SERVER PIRATA")
     console.log("Mediana (fluorite): " + getMedian(fluoriteValues).toFixed());
     console.log("Média (fluorite): " + getAverage(fluoriteValues).toFixed());
     console.log("Mediana (crystal): " + getMedian(crystalValues).toFixed());
@@ -80,7 +108,7 @@ const showUpgradeToTwelveInfoWithNSimulations = ({ server, numberOfCases, nLimit
     console.log("Máximo:", maxValue);
     console.log("Numero de simunações:", numberOfCases);
 
-    console.log(`Gastaram mais do que ${nLimitFluorite} fluoritas (em %): ` + getPercentAboveXInFluorite(fluoriteValues, nLimitFluorite).toFixed());
+    console.log(`Gastaram mais do que ${nLimitFluorite} fluoritas (em %): ` + getPercentAboveXInFluorite(fluoriteValues, nLimitFluorite).toFixed(1));
 }
 
 const showUpgradeToEleven = ({ server, numberOfCases, nLimitFluorite }: infoToEnhanceProps) => {
@@ -102,14 +130,34 @@ const showUpgradeToEleven = ({ server, numberOfCases, nLimitFluorite }: infoToEn
     console.log(`Gastaram mais do que ${nLimitFluorite} fluoritas (em %): ` + getPercentAboveXInFluorite(fluoriteValues, nLimitFluorite).toFixed());
 }
 
+const showUpgradeToNine = ({ server, numberOfCases, nLimitFluorite }: infoToEnhanceProps) => {
+
+    for (let i = 0; i < numberOfCases; i++) {
+        refino = 8;
+        fluorite = 0;
+        crystal = 0;
+        blessedScroll = 0;
+        getNine(server);
+    }
+
+    const fluoriteValues = allChancesTo09.map(item => item.fluorite);
+    const blessedScrollValues = allChancesTo09.map(item => item.blessedScroll);
+    console.log(allChancesTo09)
+    console.log("Mediana (fluorite): " + getMedian(fluoriteValues).toFixed());
+    console.log("Média (fluorite): " + getAverage(fluoriteValues).toFixed());
+    console.log("Mediana (blessed): " + getMedian(blessedScrollValues).toFixed());
+    console.log("Média (blessed): " + getAverage(blessedScrollValues).toFixed());
+    console.log(`Gastaram mais do que ${nLimitFluorite} fluoritas (em %): ` + getPercentAboveXInFluorite(fluoriteValues, nLimitFluorite).toFixed());
+}
+
 // showUpgradeToEleven({
-//     server: EServer.PRIVATE,
+//     server: EServer.OFFICIAL,
 //     numberOfCases: 1000,
 //     nLimitFluorite: 250
 // });
 
-showUpgradeToTwelveInfoWithNSimulations({
-    server: EServer.PRIVATE,
-    numberOfCases: 10000,
-    nLimitFluorite: 2500
+showUpgradeToNine({
+    server: EServer.OFFICIAL,
+    numberOfCases: 100000,
+    nLimitFluorite: 2720
 });
