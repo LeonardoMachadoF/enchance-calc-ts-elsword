@@ -137,7 +137,7 @@ import { upgrade } from "./upgrade";
 // const showUpgradeToNine = ({ server, numberOfCases, nLimitFluorite }: infoToEnhanceProps) => {
 
 //     for (let i = 0; i < numberOfCases; i++) {
-//         refino = 8;
+//         refino = 8;a
 //         fluorite = 0;
 //         crystal = 0;
 //         blessedScroll = 0;
@@ -198,10 +198,11 @@ const allChancesTo11: { fluorite: number, crystal: number, blessedScroll: number
 const allChancesTo12: { fluorite: number, crystal: number, blessedScroll: number }[] = [];
 
 upgrade({
+    to: 'eleven',
     server: EServer.OFFICIAL,
     enhance: {
         initial: 10,
-        final: 12
+        final: 11
     },
     allChances: {
         nine: allChancesTo09,

@@ -122,7 +122,7 @@ const upgrade_1 = require("./upgrade");
 // }
 // const showUpgradeToNine = ({ server, numberOfCases, nLimitFluorite }: infoToEnhanceProps) => {
 //     for (let i = 0; i < numberOfCases; i++) {
-//         refino = 8;
+//         refino = 8;a
 //         fluorite = 0;
 //         crystal = 0;
 //         blessedScroll = 0;
@@ -175,6 +175,7 @@ const allChancesTo10 = [];
 const allChancesTo11 = [];
 const allChancesTo12 = [];
 (0, upgrade_1.upgrade)({
+    to: 'eleven',
     server: EServer_1.EServer.OFFICIAL,
     enhance: {
         initial: 10,
