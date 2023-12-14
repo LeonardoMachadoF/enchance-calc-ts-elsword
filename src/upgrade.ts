@@ -12,7 +12,7 @@ interface UpgradeInfo {
     server: EServer,
     enhance: {
         initial: number,
-        final: number,
+        final?: number,
         now?: number
     }
     allChances: {
@@ -47,70 +47,92 @@ const destroyToTwelveChance = 0.25;
 const downgradeToElevenChance = 0.27;
 
 const getNine = (props: UpgradeInfo) => {
-    if (props.hammerByEnhanceChance.nine) {
-        upgradeToNineChance = upgradeToNineChance * 2;
-    }
-    while (props.enhance.initial === 8) {
-        props.resources.fluorite++;
-        const chance = Math.random();
-        if (chance <= upgradeToNineChance) {
-            props.enhance.initial = 9;
-            props.allChances.nine.push({ fluorite: props.resources.fluorite, blessedScroll: props.resources.blessedScroll, crystal: props.resources.crystal });
-        } else if (chance <= upgradeToNineChance + destroyToNineChance && props.server === EServer.OFFICIAL) {
-            props.resources.blessedScroll++;
+    if (props.enhance.now! === 8) {
+        let upgradeChance = upgradeToNineChance;
+        if (props.hammerByEnhanceChance.nine) {
+            upgradeChance = upgradeToNineChance * 2;
+        }
+        while (props.enhance.now === 8) {
+            props.resources.fluorite++;
+            const chance = Math.random();
+            if (chance <= upgradeChance) {
+                props.enhance.now = 9;
+                props.allChances.nine.push({ fluorite: props.resources.fluorite, blessedScroll: props.resources.blessedScroll, crystal: props.resources.crystal });
+                props.resources.blessedScroll = 0;
+                props.resources.fluorite = 0;
+            } else if (chance <= upgradeChance + destroyToNineChance && props.server === EServer.OFFICIAL) {
+                props.resources.blessedScroll++;
+            }
         }
     }
 }
 
 const getTen = (props: UpgradeInfo) => {
-    if (props.hammerByEnhanceChance.ten) {
-        upgradeToTenChance = upgradeToTenChance * 2;
+    if (props.enhance.now! < 9) {
+        getNine(props);
     }
-    while (props.enhance.initial === 9) {
+
+    let upgradeChance = upgradeToTenChance;
+    if (props.hammerByEnhanceChance.ten) {
+        upgradeChance = upgradeToTenChance * 2;
+    }
+    while (props.enhance.now === 9) {
         props.resources.fluorite++;
         const chance = Math.random();
-        if (chance <= upgradeToTenChance) {
-            props.enhance.initial = 10;
+        if (chance <= upgradeChance) {
+            props.enhance.now = 10;
             props.allChances.ten.push({ fluorite: props.resources.fluorite, blessedScroll: props.resources.blessedScroll, crystal: props.resources.crystal });
-        } else if (chance <= upgradeToTenChance + destroyToTenChance && props.server === EServer.OFFICIAL) {
+            props.resources.blessedScroll = 0;
+            props.resources.fluorite = 0;
+        } else if (chance <= upgradeChance + destroyToTenChance && props.server === EServer.OFFICIAL) {
             props.resources.blessedScroll++;
         }
     }
 }
 
 function getEleven(props: UpgradeInfo) {
-    console.log("a")
-    if (props.hammerByEnhanceChance.eleven) {
-        upgradeToElevenChance = upgradeToElevenChance * 2;
+    if (props.enhance.now! < 10) {
+        getTen(props);
     }
-    while (props.enhance.initial === 10) {
+
+    let upgradeChance = upgradeToElevenChance;
+    if (props.hammerByEnhanceChance.eleven) {
+        upgradeChance = upgradeToElevenChance * 2;
+    }
+    while (props.enhance.now === 10) {
         props.resources.fluorite++;
         const chance = Math.random();
-        if (chance <= upgradeToElevenChance) {
-            props.enhance.initial = 11;
+        if (chance <= upgradeChance) {
+            props.enhance.now = 11;
             props.allChances.eleven.push({ fluorite: props.resources.fluorite, crystal: 0, blessedScroll: props.resources.blessedScroll });
-        } else if (chance <= upgradeToElevenChance + destroyToElevenChance && props.server === EServer.OFFICIAL) {
+            props.resources.blessedScroll = 0;
+            props.resources.fluorite = 0;
+        } else if (chance <= upgradeChance + destroyToElevenChance && props.server === EServer.OFFICIAL) {
             props.resources.blessedScroll++;
         }
     }
 }
 
 function getTwelve(props: UpgradeInfo) {
-    while (props.enhance.initial < props.enhance.final) {
-        if (props.enhance.initial === 10) {
+    while (props.enhance.now! < props.enhance.final!) {
+        if (props.enhance.now! < 11) {
             getEleven(props);
         } else {
+            let upgradeChance = upgradeToElevenChance;
             if (props.hammerByEnhanceChance.twelve) {
-                upgradeToTwelveChance = upgradeToTwelveChance * 2;
+                upgradeChance = upgradeToTwelveChance * 2;
             }
 
             props.resources.crystal++;
             const chance = Math.random();
-            if (chance <= upgradeToTwelveChance) {
-                props.enhance.initial = 12;
+            if (chance <= upgradeChance) {
+                props.enhance.now = 12;
                 props.allChances.twelve.push({ fluorite: props.resources.fluorite, crystal: props.resources.crystal, blessedScroll: props.resources.blessedScroll });
-            } else if (chance <= downgradeToElevenChance + upgradeToTwelveChance) {
-                props.enhance.initial = 10;
+                props.resources.blessedScroll = 0;
+                props.resources.fluorite = 0;
+                props.resources.crystal = 0;
+            } else if (chance <= downgradeToElevenChance + upgradeChance) {
+                props.enhance.now = 10;
             } else if (chance <= downgradeToElevenChance + upgradeToElevenChance + destroyToTwelveChance && props.server === EServer.OFFICIAL) {
                 props.resources.blessedScroll++;
             }
@@ -126,15 +148,21 @@ export function upgrade(props: UpgradeInfo) {
         twelve: () => getTwelve(props)
     }
 
+    const enhanceFinal = {
+        nine: 9,
+        ten: 10,
+        eleven: 11,
+        twelve: 12
+    }
+
+    props.enhance.final = enhanceFinal[props.to] as number;
+
     for (let i = 0; i < props.numberOfCases; i++) {
-        props.enhance.initial = 10;
-        props.resources.fluorite = 0;
-        props.resources.crystal = 0;
-        props.resources.blessedScroll = 0;
+        props.enhance.now = props.enhance.initial;
         upgradeOptions[props.to]();
     }
 
-    console.log(props.allChances.eleven)
+    console.log(props.allChances)
 }
 
 

@@ -190,7 +190,7 @@ let refino = 10;
 let fluorite = 0;
 let crystal = 0;
 let blessedScroll = 0;
-let numberOfCases = 100;
+let numberOfCases = 1;
 const limit = 2000;
 const allChancesTo09: { fluorite: number, crystal: number, blessedScroll: number }[] = [];
 const allChancesTo10: { fluorite: number, crystal: number, blessedScroll: number }[] = [];
@@ -198,11 +198,10 @@ const allChancesTo11: { fluorite: number, crystal: number, blessedScroll: number
 const allChancesTo12: { fluorite: number, crystal: number, blessedScroll: number }[] = [];
 
 upgrade({
-    to: 'eleven',
+    to: 'twelve',
     server: EServer.OFFICIAL,
     enhance: {
-        initial: 10,
-        final: 11
+        initial: 9
     },
     allChances: {
         nine: allChancesTo09,

@@ -4,7 +4,7 @@ exports.upgrade = void 0;
 const EServer_1 = require("./enums/EServer");
 let upgradeToNineChance = 0.021;
 let upgradeToTenChance = 0.0105;
-let upgradeToElevenChance = 0.907;
+let upgradeToElevenChance = 0.007;
 let upgradeToTwelveChance = 0.0105;
 const destroyToNineChance = 0.2;
 const destroyToTenChance = 0.25;
@@ -44,6 +44,7 @@ const getTen = (props) => {
     }
 };
 function getEleven(props) {
+    console.log("a");
     if (props.hammerByEnhanceChance.eleven) {
         upgradeToElevenChance = upgradeToElevenChance * 2;
     }
@@ -58,7 +59,6 @@ function getEleven(props) {
             props.resources.blessedScroll++;
         }
     }
-    return props;
 }
 function getTwelve(props) {
     while (props.enhance.initial < props.enhance.final) {
@@ -86,17 +86,24 @@ function getTwelve(props) {
 }
 function upgrade(props) {
     const upgradeOptions = {
-        nine: getNine(props),
-        ten: getTen(props),
-        eleven: getEleven(props),
-        twelve: getTwelve(props)
+        nine: () => getNine(props),
+        ten: () => getTen(props),
+        eleven: () => getEleven(props),
+        twelve: () => getTwelve(props)
     };
+    const enhanceFinal = {
+        nine: 9,
+        ten: 10,
+        eleven: 11,
+        twelve: 12
+    };
+    props.enhance.final = enhanceFinal[props.to];
     for (let i = 0; i < props.numberOfCases; i++) {
         props.enhance.initial = 10;
         props.resources.fluorite = 0;
         props.resources.crystal = 0;
         props.resources.blessedScroll = 0;
-        upgradeOptions[props.to];
+        upgradeOptions[props.to]();
     }
     console.log(props.allChances.eleven);
 }

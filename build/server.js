@@ -178,8 +178,7 @@ const allChancesTo12 = [];
     to: 'eleven',
     server: EServer_1.EServer.OFFICIAL,
     enhance: {
-        initial: 10,
-        final: 11
+        initial: 10
     },
     allChances: {
         nine: allChancesTo09,
@@ -195,7 +194,7 @@ const allChancesTo12 = [];
     hammerByEnhanceChance: {
         nine: false,
         ten: false,
-        eleven: false,
+        eleven: true,
         twelve: true
     },
     numberOfCases,
