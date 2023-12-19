@@ -4,6 +4,7 @@
 // import { upgrade } from "./upgrade";
 
 import { EServer } from "./enums/EServer";
+import { AllowedRefines } from "./types/AllowedRefines";
 import { upgrade } from "./upgrade";
 
 // let refino = 10;
@@ -186,22 +187,23 @@ import { upgrade } from "./upgrade";
 // });
 
 
-let refino = 10;
+let refinoInicial = 10;
+let refinoFinal: AllowedRefines = 11;
 let fluorite = 0;
 let crystal = 0;
 let blessedScroll = 0;
-let numberOfCases = 1;
-const limit = 2000;
+let numberOfCases = 100;
 const allChancesTo09: { fluorite: number, crystal: number, blessedScroll: number }[] = [];
 const allChancesTo10: { fluorite: number, crystal: number, blessedScroll: number }[] = [];
 const allChancesTo11: { fluorite: number, crystal: number, blessedScroll: number }[] = [];
 const allChancesTo12: { fluorite: number, crystal: number, blessedScroll: number }[] = [];
+const allChancesTo11ReducedPerCase: { case: number, fluorites: number, blessedScroll: number }[] = [];
 
 upgrade({
-    to: 'twelve',
     server: EServer.OFFICIAL,
     enhance: {
-        initial: 9
+        initial: refinoInicial,
+        final: refinoFinal
     },
     allChances: {
         nine: allChancesTo09,
@@ -221,5 +223,5 @@ upgrade({
         twelve: true
     },
     numberOfCases,
-    limit
+    allChancesTo11ReducedPerCase
 });

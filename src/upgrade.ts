@@ -1,52 +1,20 @@
 import { EServer } from "./enums/EServer";
-import { getAverage, getMedian, getPercentAboveXInFluorite, sortArray } from "./utils";
+import { AllChancesToReducer } from "./types/AllChancesToReducer";
+import { AllowedRefines } from "./types/AllowedRefines";
+import { UpgradeInfo } from "./types/UpgradeInfo";
 
-interface InfoDTO {
-    fluorite: number,
-    crystal: number,
-    blessedScroll: number
-}
-
-interface UpgradeInfo {
-    to: 'nine' | 'ten' | 'eleven' | 'twelve',
-    server: EServer,
-    enhance: {
-        initial: number,
-        final?: number,
-        now?: number
-    }
-    allChances: {
-        nine: InfoDTO[],
-        ten: InfoDTO[],
-        eleven: InfoDTO[],
-        twelve: InfoDTO[]
-    },
-    resources: {
-        fluorite: number,
-        crystal: number,
-        blessedScroll: number
-    },
-    hammerByEnhanceChance: {
-        nine: boolean,
-        ten: boolean,
-        eleven: boolean,
-        twelve: boolean
-    },
-    numberOfCases: number,
-    limit?: number
-}
-
-let upgradeToNineChance = 0.021;
-let upgradeToTenChance = 0.0105;
-let upgradeToElevenChance = 0.007;
-let upgradeToTwelveChance = 0.0105;
 const destroyToNineChance = 0.2;
 const destroyToTenChance = 0.25;
 const destroyToElevenChance = 0.353;
 const destroyToTwelveChance = 0.25;
 const downgradeToElevenChance = 0.27;
 
-const getNine = (props: UpgradeInfo) => {
+let upgradeToNineChance = 0.021;
+let upgradeToTenChance = 0.0105;
+let upgradeToElevenChance = 0.007;
+let upgradeToTwelveChance = 0.0105;
+
+const getNine = (props: UpgradeInfo, caso: number) => {
     if (props.enhance.now! === 8) {
         let upgradeChance = upgradeToNineChance;
         if (props.hammerByEnhanceChance.nine) {
@@ -67,9 +35,9 @@ const getNine = (props: UpgradeInfo) => {
     }
 }
 
-const getTen = (props: UpgradeInfo) => {
+const getTen = (props: UpgradeInfo, caso: number) => {
     if (props.enhance.now! < 9) {
-        getNine(props);
+        getNine(props, caso);
     }
 
     let upgradeChance = upgradeToTenChance;
@@ -90,9 +58,9 @@ const getTen = (props: UpgradeInfo) => {
     }
 }
 
-function getEleven(props: UpgradeInfo) {
+function getEleven(props: UpgradeInfo, caso: number) {
     if (props.enhance.now! < 10) {
-        getTen(props);
+        getTen(props, caso);
     }
 
     let upgradeChance = upgradeToElevenChance;
@@ -105,6 +73,9 @@ function getEleven(props: UpgradeInfo) {
         if (chance <= upgradeChance) {
             props.enhance.now = 11;
             props.allChances.eleven.push({ fluorite: props.resources.fluorite, crystal: 0, blessedScroll: props.resources.blessedScroll });
+
+            props.allChancesTo11ReducedPerCase.push({ case: caso, blessedScroll: props.resources.blessedScroll, fluorites: props.resources.fluorite });
+
             props.resources.blessedScroll = 0;
             props.resources.fluorite = 0;
         } else if (chance <= upgradeChance + destroyToElevenChance && props.server === EServer.OFFICIAL) {
@@ -113,10 +84,10 @@ function getEleven(props: UpgradeInfo) {
     }
 }
 
-function getTwelve(props: UpgradeInfo) {
+function getTwelve(props: UpgradeInfo, caso: number) {
     while (props.enhance.now! < props.enhance.final!) {
         if (props.enhance.now! < 11) {
-            getEleven(props);
+            getEleven(props, caso);
         } else {
             let upgradeChance = upgradeToElevenChance;
             if (props.hammerByEnhanceChance.twelve) {
@@ -142,27 +113,39 @@ function getTwelve(props: UpgradeInfo) {
 
 export function upgrade(props: UpgradeInfo) {
     const upgradeOptions = {
-        nine: () => getNine(props),
-        ten: () => getTen(props),
-        eleven: () => getEleven(props),
-        twelve: () => getTwelve(props)
+        9: (caso: number) => getNine(props, caso),
+        10: (caso: number) => getTen(props, caso),
+        11: (caso: number) => getEleven(props, caso),
+        12: (caso: number) => getTwelve(props, caso)
     }
-
-    const enhanceFinal = {
-        nine: 9,
-        ten: 10,
-        eleven: 11,
-        twelve: 12
-    }
-
-    props.enhance.final = enhanceFinal[props.to] as number;
 
     for (let i = 0; i < props.numberOfCases; i++) {
         props.enhance.now = props.enhance.initial;
-        upgradeOptions[props.to]();
+        upgradeOptions[props.enhance.final](i);
     }
 
-    console.log(props.allChances)
+    function calcularSomaPorCase(chances: AllChancesToReducer[]) {
+        const result: { case: number, fluorita: number, blessex: number }[] = [];
+
+        chances.forEach(chance => {
+            const existingItem = result.find(item => item.case === chance.case);
+
+            if (existingItem) {
+                existingItem.fluorita += chance.fluorites;
+                existingItem.blessex += chance.blessedScroll;
+            } else {
+                result.push({
+                    case: chance.case,
+                    fluorita: chance.fluorites,
+                    blessex: chance.blessedScroll
+                });
+            }
+        });
+
+        return result;
+    }
+
+    console.log(calcularSomaPorCase(props.allChancesTo11ReducedPerCase))
 }
 
 
