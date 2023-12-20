@@ -1,7 +1,8 @@
 import { EServer } from "./enums/EServer";
-import { AllChancesToReducer } from "./types/AllChancesToReducer";
 import { AllowedRefines } from "./types/AllowedRefines";
+import { InfoDTO } from "./types/InfoDTO";
 import { UpgradeInfo } from "./types/UpgradeInfo";
+import { UpgradeReturnDTO } from "./types/UpgradeReturnDTO";
 
 const destroyToNineChance = 0.2;
 const destroyToTenChance = 0.25;
@@ -25,7 +26,7 @@ const getNine = (props: UpgradeInfo, caso: number) => {
             const chance = Math.random();
             if (chance <= upgradeChance) {
                 props.enhance.now = 9;
-                props.allChances.nine.push({ fluorite: props.resources.fluorite, blessedScroll: props.resources.blessedScroll, crystal: props.resources.crystal });
+                props.allChances.nine.push({ case: caso, fluorite: props.resources.fluorite, blessedScroll: props.resources.blessedScroll, crystal: props.resources.crystal });
                 props.resources.blessedScroll = 0;
                 props.resources.fluorite = 0;
             } else if (chance <= upgradeChance + destroyToNineChance && props.server === EServer.OFFICIAL) {
@@ -49,7 +50,7 @@ const getTen = (props: UpgradeInfo, caso: number) => {
         const chance = Math.random();
         if (chance <= upgradeChance) {
             props.enhance.now = 10;
-            props.allChances.ten.push({ fluorite: props.resources.fluorite, blessedScroll: props.resources.blessedScroll, crystal: props.resources.crystal });
+            props.allChances.ten.push({ case: caso, fluorite: props.resources.fluorite, blessedScroll: props.resources.blessedScroll, crystal: props.resources.crystal });
             props.resources.blessedScroll = 0;
             props.resources.fluorite = 0;
         } else if (chance <= upgradeChance + destroyToTenChance && props.server === EServer.OFFICIAL) {
@@ -72,9 +73,8 @@ function getEleven(props: UpgradeInfo, caso: number) {
         const chance = Math.random();
         if (chance <= upgradeChance) {
             props.enhance.now = 11;
-            props.allChances.eleven.push({ fluorite: props.resources.fluorite, crystal: 0, blessedScroll: props.resources.blessedScroll });
+            props.allChances.eleven.push({ case: caso, fluorite: props.resources.fluorite, crystal: 0, blessedScroll: props.resources.blessedScroll });
 
-            props.allChancesTo11ReducedPerCase.push({ case: caso, blessedScroll: props.resources.blessedScroll, fluorites: props.resources.fluorite });
 
             props.resources.blessedScroll = 0;
             props.resources.fluorite = 0;
@@ -98,7 +98,7 @@ function getTwelve(props: UpgradeInfo, caso: number) {
             const chance = Math.random();
             if (chance <= upgradeChance) {
                 props.enhance.now = 12;
-                props.allChances.twelve.push({ fluorite: props.resources.fluorite, crystal: props.resources.crystal, blessedScroll: props.resources.blessedScroll });
+                props.allChances.twelve.push({ case: caso, fluorite: props.resources.fluorite, crystal: props.resources.crystal, blessedScroll: props.resources.blessedScroll });
                 props.resources.blessedScroll = 0;
                 props.resources.fluorite = 0;
                 props.resources.crystal = 0;
@@ -124,28 +124,44 @@ export function upgrade(props: UpgradeInfo) {
         upgradeOptions[props.enhance.final](i);
     }
 
-    function calcularSomaPorCase(chances: AllChancesToReducer[]) {
-        const result: { case: number, fluorita: number, blessex: number }[] = [];
+    // function calcularSomaPorCase(chances: UpgradeReturnDTO) {
+    //     const result: { case: number, fluorite: number, blessed: number }[] = [];
 
-        chances.forEach(chance => {
-            const existingItem = result.find(item => item.case === chance.case);
+    //     chances.forEach(chance => {
+    //         const existingItem = result.find(item => item.case === chance.case);
 
-            if (existingItem) {
-                existingItem.fluorita += chance.fluorites;
-                existingItem.blessex += chance.blessedScroll;
-            } else {
-                result.push({
-                    case: chance.case,
-                    fluorita: chance.fluorites,
-                    blessex: chance.blessedScroll
-                });
-            }
-        });
+    //         if (existingItem) {
+    //             existingItem.fluorite += chance.fluorite;
+    //             existingItem.blessed += chance.blessedScroll;
+    //         } else {
+    //             result.push({
+    //                 case: chance.case,
+    //                 fluorite: chance.fluorite,
+    //                 blessed: chance.blessedScroll
+    //             });
+    //         }
+    //     });
 
-        return result;
+    //     return result;
+    // }
+
+    function calculateTotals(chances: UpgradeReturnDTO) {
+        const caseSummaries = [];
+
+        // Iterar sobre os diferentes níveis de atualização
+        for (let i = 0; i <= 1; i++) {
+            const data = props.allChances.ten.concat(props.allChances.eleven).concat(props.allChances.twelve).filter(item => item.case === i);
+
+            const fluoriteTotal = data.reduce((total, item) => total + item.fluorite, 0);
+            const blessedTotal = data.reduce((total, item) => total + item.blessedScroll, 0);
+
+            caseSummaries.push({ case: i, fluorite: fluoriteTotal, blessed: blessedTotal });
+        }
+
+        return caseSummaries;
     }
-
-    console.log(calcularSomaPorCase(props.allChancesTo11ReducedPerCase))
+    console.log(calculateTotals(props.allChances))
+    // return calcularSomaPorCase(props.allChances);
 }
 
 

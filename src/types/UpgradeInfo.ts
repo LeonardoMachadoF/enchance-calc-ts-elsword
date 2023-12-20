@@ -1,5 +1,4 @@
 import { EServer } from "../enums/EServer"
-import { AllChancesToReducer } from "./AllChancesToReducer"
 import { AllowedRefines } from "./AllowedRefines"
 import { InfoDTO } from "./InfoDTO"
 
@@ -27,6 +26,5 @@ export interface UpgradeInfo {
         eleven: boolean,
         twelve: boolean
     },
-    numberOfCases: number,
-    allChancesTo11ReducedPerCase: AllChancesToReducer[];
+    numberOfCases: number
 }
