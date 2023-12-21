@@ -2,19 +2,19 @@ import { EServer } from "./enums/EServer";
 import { AllowedRefines } from "./types/AllowedRefines";
 import { InfoDTO } from "./types/InfoDTO";
 import { upgrade } from "./upgrade";
-import { getAverage, getMedian } from "./utils";
+import { getAverage, getMedian, getPercentAboveXInFluorite, sortArray } from "./utils";
 
-let refinoInicial = 9;
-let refinoFinal: AllowedRefines = 10;
+let refinoInicial = 11;
+let refinoFinal: AllowedRefines = 12;
 let fluorite = 0;
 let crystal = 0;
 let blessedScroll = 0;
-let numberOfCases = 2;
+let numberOfCases = 10000;
+let limit = 1000;
 const allChancesTo09: InfoDTO[] = [];
 const allChancesTo10: InfoDTO[] = [];
 const allChancesTo11: InfoDTO[] = [];
 const allChancesTo12: InfoDTO[] = [];
-const allChancesTo11ReducedPerCase: { case: number, fluorites: number, blessedScroll: number }[] = [];
 
 const data = upgrade({
     server: EServer.OFFICIAL,
@@ -35,13 +35,33 @@ const data = upgrade({
     },
     hammerByEnhanceChance: {
         nine: false,
-        ten: true,
+        ten: false,
         eleven: false,
         twelve: true
     },
     numberOfCases
 });
 
-// const fluoriteValues = data.map(item => item.fluorite);
-// const blessedValues = data.map(item => item.blessed);
+const fluoriteValues = data.map(item => item.fluorite);
+const blessedValues = data.map(item => item.blessed);
+const crystalValues = data.map(item => item.crystal);
+
 console.log(data)
+
+console.log(EServer.OFFICIAL ? "SERVER OFICIAL" : "SERVER PIRATA")
+console.log("Mediana (fluorite): " + getMedian(fluoriteValues).toFixed());
+console.log("Média (fluorite): " + getAverage(fluoriteValues).toFixed());
+console.log("Mediana (crystal): " + getMedian(crystalValues).toFixed());
+console.log("Média (crystal): " + getAverage(crystalValues).toFixed());
+console.log("Mediana (blessed): " + getMedian(blessedValues).toFixed());
+console.log("Média (blessed): " + getAverage(blessedValues).toFixed());
+
+const sortedArray = sortArray(fluoriteValues);
+const minValue = sortedArray[0];
+const maxValue = sortedArray[sortedArray.length - 1];
+
+console.log('Minimo:', minValue);
+console.log("Máximo:", maxValue);
+console.log("Numero de simunações:", numberOfCases);
+
+console.log(`Gastaram mais do que ${limit} fluoritas (em %): ` + getPercentAboveXInFluorite(fluoriteValues, limit || 0).toFixed(1));

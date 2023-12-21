@@ -1,6 +1,4 @@
 import { EServer } from "./enums/EServer";
-import { AllowedRefines } from "./types/AllowedRefines";
-import { InfoDTO } from "./types/InfoDTO";
 import { UpgradeInfo } from "./types/UpgradeInfo";
 import { UpgradeReturnDTO } from "./types/UpgradeReturnDTO";
 
@@ -124,76 +122,21 @@ export function upgrade(props: UpgradeInfo) {
         upgradeOptions[props.enhance.final](i);
     }
 
-    // function calcularSomaPorCase(chances: UpgradeReturnDTO) {
-    //     const result: { case: number, fluorite: number, blessed: number }[] = [];
-
-    //     chances.forEach(chance => {
-    //         const existingItem = result.find(item => item.case === chance.case);
-
-    //         if (existingItem) {
-    //             existingItem.fluorite += chance.fluorite;
-    //             existingItem.blessed += chance.blessedScroll;
-    //         } else {
-    //             result.push({
-    //                 case: chance.case,
-    //                 fluorite: chance.fluorite,
-    //                 blessed: chance.blessedScroll
-    //             });
-    //         }
-    //     });
-
-    //     return result;
-    // }
 
     function calculateTotals(chances: UpgradeReturnDTO) {
         const caseSummaries = [];
 
-        // Iterar sobre os diferentes níveis de atualização
-        for (let i = 0; i <= 1; i++) {
-            const data = props.allChances.ten.concat(props.allChances.eleven).concat(props.allChances.twelve).filter(item => item.case === i);
-
+        for (let i = 0; i < props.numberOfCases; i++) {
+            const data = chances.nine.concat(chances.ten).concat(chances.eleven).concat(chances.twelve).filter(item => item.case === i);
             const fluoriteTotal = data.reduce((total, item) => total + item.fluorite, 0);
             const blessedTotal = data.reduce((total, item) => total + item.blessedScroll, 0);
+            const crystalTotal = data.reduce((total, item) => total + item.crystal, 0);
 
-            caseSummaries.push({ case: i, fluorite: fluoriteTotal, blessed: blessedTotal });
+            caseSummaries.push({ case: i, fluorite: fluoriteTotal, blessed: blessedTotal, crystal: crystalTotal });
         }
 
         return caseSummaries;
     }
-    console.log(calculateTotals(props.allChances))
-    // return calcularSomaPorCase(props.allChances);
+
+    return calculateTotals(props.allChances);
 }
-
-
-//     const fluoriteValues = allChances.eleven.map(item => item.fluorite);
-//     const crystalValues = allChances.eleven.map(item => item.crystal);
-//     const blessedScrollValues = allChances.eleven.map(item => item.blessedScroll);
-
-//     console.log(EServer.OFFICIAL ? "SERVER OFICIAL" : "SERVER PIRATA")
-//     console.log("Mediana (fluorite): " + getMedian(fluoriteValues).toFixed());
-//     console.log("Média (fluorite): " + getAverage(fluoriteValues).toFixed());
-//     console.log("Mediana (crystal): " + getMedian(crystalValues).toFixed());
-//     console.log("Média (crystal): " + getAverage(crystalValues).toFixed());
-//     console.log("Mediana (blessed): " + getMedian(blessedScrollValues).toFixed());
-//     console.log("Média (blessed): " + getAverage(blessedScrollValues).toFixed());
-
-//     const sortedArray = sortArray(fluoriteValues);
-//     const minValue = sortedArray[0];
-//     const maxValue = sortedArray[sortedArray.length - 1];
-
-//     console.log('Minimo:', minValue);
-//     console.log("Máximo:", maxValue);
-//     console.log("Numero de simunações:", numberOfCases);
-
-//     console.log(`Gastaram mais do que ${limit} fluoritas (em %): ` + getPercentAboveXInFluorite(fluoriteValues, limit || 0).toFixed(1));
-// console.log(allChances)
-
-// const upgradeToNineChance = 0.042;
-// const upgradeToTenChance = 0.021;
-// const upgradeToElevenChance = 0.007;
-// const upgradeToTwelveChanceWithHammer = 0.021;
-// const destroyToNineChance = 0.2;
-// const destroyToTenChance = 0.25;
-// const destroyToElevenChance = 0.353;
-// const destroyToTwelveChance = 0.25;
-// const downgradeToElevenChance = 0.27;
