@@ -4,13 +4,13 @@ import { InfoDTO } from "./types/InfoDTO";
 import { upgrade } from "./upgrade";
 import { getAverage, getMedian, getPercentAboveXInFluorite, sortArray } from "./utils";
 
-let refinoInicial = 11;
-let refinoFinal: AllowedRefines = 12;
+let refinoInicial: AllowedRefines = 10;
+let refinoFinal: AllowedRefines = 11;
 let fluorite = 0;
 let crystal = 0;
 let blessedScroll = 0;
 let numberOfCases = 10000;
-let limit = 1000;
+let limit = 100;
 const allChancesTo09: InfoDTO[] = [];
 const allChancesTo10: InfoDTO[] = [];
 const allChancesTo11: InfoDTO[] = [];
@@ -34,9 +34,9 @@ const data = upgrade({
         blessedScroll
     },
     hammerByEnhanceChance: {
-        nine: false,
-        ten: false,
-        eleven: false,
+        nine: true,
+        ten: true,
+        eleven: true,
         twelve: true
     },
     numberOfCases
