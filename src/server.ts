@@ -1,20 +1,12 @@
 import { EServer } from "./enums/EServer";
 import { AllowedRefines } from "./types/AllowedRefines";
-import { InfoDTO } from "./types/InfoDTO";
 import { upgrade } from "./upgrade";
 import { getAverage, getMedian, getPercentAboveXInFluorite, sortArray } from "./utils";
 
 let refinoInicial: AllowedRefines = 10;
-let refinoFinal: AllowedRefines = 11;
-let fluorite = 0;
-let crystal = 0;
-let blessedScroll = 0;
-let numberOfCases = 10000;
+let refinoFinal: AllowedRefines = 12;
+let numberOfCases = 40000;
 let limit = 100;
-const allChancesTo09: InfoDTO[] = [];
-const allChancesTo10: InfoDTO[] = [];
-const allChancesTo11: InfoDTO[] = [];
-const allChancesTo12: InfoDTO[] = [];
 
 const data = upgrade({
     server: EServer.OFFICIAL,
@@ -23,20 +15,20 @@ const data = upgrade({
         final: refinoFinal
     },
     allChances: {
-        nine: allChancesTo09,
-        ten: allChancesTo10,
-        eleven: allChancesTo11,
-        twelve: allChancesTo12
+        nine: [],
+        ten: [],
+        eleven: [],
+        twelve: []
     },
     resources: {
-        fluorite,
-        crystal,
-        blessedScroll
+        fluorite: 0,
+        crystal: 0,
+        blessedScroll: 0
     },
     hammerByEnhanceChance: {
-        nine: true,
-        ten: true,
-        eleven: true,
+        nine: false,
+        ten: false,
+        eleven: false,
         twelve: true
     },
     numberOfCases
@@ -45,8 +37,6 @@ const data = upgrade({
 const fluoriteValues = data.map(item => item.fluorite);
 const blessedValues = data.map(item => item.blessed);
 const crystalValues = data.map(item => item.crystal);
-
-console.log(data)
 
 console.log(EServer.OFFICIAL ? "SERVER OFICIAL" : "SERVER PIRATA")
 console.log("Mediana (fluorite): " + getMedian(fluoriteValues).toFixed());
