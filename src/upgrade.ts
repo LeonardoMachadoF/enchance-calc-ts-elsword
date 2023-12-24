@@ -1,6 +1,6 @@
 import { EServer } from "./enums/EServer";
 import { UpgradeInfo } from "./types/UpgradeInfo";
-import { UpgradeReturnDTO } from "./types/UpgradeReturnDTO";
+import { UpgradeResultInfo } from "./types/UpgradeReturnDTO";
 
 const destroyToNineChance = 0.2;
 const destroyToTenChance = 0.25;
@@ -123,7 +123,7 @@ export function upgrade(props: UpgradeInfo) {
     }
 
 
-    function calculateTotals(chances: UpgradeReturnDTO) {
+    function calculateTotals(chances: UpgradeResultInfo) {
         const caseSummaries = [];
 
         for (let i = 0; i < props.numberOfCases; i++) {

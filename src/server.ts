@@ -1,11 +1,11 @@
 import { EServer } from "./enums/EServer";
-import { AllowedRefines } from "./types/AllowedRefines";
+import { AllowedRefines, AllowedRefinesFinal } from "./types/AllowedRefines";
 import { upgrade } from "./upgrade";
 import { getAverage, getMedian, getPercentAboveXInFluorite, sortArray } from "./utils";
 
 let refinoInicial: AllowedRefines = 10;
-let refinoFinal: AllowedRefines = 12;
-let numberOfCases = 40000;
+let refinoFinal: AllowedRefinesFinal = 12;
+let numberOfCases = 3000;
 let limit = 100;
 
 const data = upgrade({

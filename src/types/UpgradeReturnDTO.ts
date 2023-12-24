@@ -1,6 +1,6 @@
 import { InfoDTO } from "./InfoDTO";
 
-export interface UpgradeReturnDTO {
+export interface UpgradeResultInfo {
     nine: InfoDTO[];
     ten: InfoDTO[];
     eleven: InfoDTO[];
