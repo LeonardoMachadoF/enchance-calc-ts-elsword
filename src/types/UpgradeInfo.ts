@@ -15,7 +15,7 @@ export interface UpgradeInfo {
         crystal: number,
         blessedScroll: number
     },
-    hammerByEnhanceChance: {
+    hammerByEnhance: {
         nine: boolean,
         ten: boolean,
         eleven: boolean,

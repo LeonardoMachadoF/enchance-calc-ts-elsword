@@ -16,7 +16,7 @@ let upgradeToTwelveChance = 0.0105;
 const getNine = (props: UpgradeInfo, caso: number) => {
     if (props.enhance.now! === 8) {
         let upgradeChance = upgradeToNineChance;
-        if (props.hammerByEnhanceChance.nine) {
+        if (props.hammerByEnhance.nine) {
             upgradeChance = upgradeToNineChance * 2;
         }
         while (props.enhance.now === 8) {
@@ -40,7 +40,7 @@ const getTen = (props: UpgradeInfo, caso: number) => {
     }
 
     let upgradeChance = upgradeToTenChance;
-    if (props.hammerByEnhanceChance.ten) {
+    if (props.hammerByEnhance.ten) {
         upgradeChance = upgradeToTenChance * 2;
     }
     while (props.enhance.now === 9) {
@@ -63,7 +63,7 @@ function getEleven(props: UpgradeInfo, caso: number) {
     }
 
     let upgradeChance = upgradeToElevenChance;
-    if (props.hammerByEnhanceChance.eleven) {
+    if (props.hammerByEnhance.eleven) {
         upgradeChance = upgradeToElevenChance * 2;
     }
     while (props.enhance.now === 10) {
@@ -88,7 +88,7 @@ function getTwelve(props: UpgradeInfo, caso: number) {
             getEleven(props, caso);
         } else {
             let upgradeChance = upgradeToElevenChance;
-            if (props.hammerByEnhanceChance.twelve) {
+            if (props.hammerByEnhance.twelve) {
                 upgradeChance = upgradeToTwelveChance * 2;
             }
 
