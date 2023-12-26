@@ -1,8 +1,8 @@
-import { upgrade } from "./upgrade";
+import { upgrade, enhance } from "./upgrade";
 import { showInfo } from "./utils";
 import { server, refinoInicial, refinoFinal, hammerByEnhance, numberOfCases, limit } from './info';
 
-const data = upgrade({
+const data = enhance({
     server,
     enhance: {
         initial: refinoInicial,
@@ -23,4 +23,4 @@ const data = upgrade({
     numberOfCases
 });
 
-showInfo({ data, numberOfCases, limit });
+// showInfo({ data, numberOfCases, limit });
