@@ -1,5 +1,4 @@
 import { EServer } from "./enums/EServer";
-import { InfoDTO } from "./types/InfoDTO";
 import { ShowInfoType } from "./types/ShowInfoType";
 
 export const sortArray = (arr: number[]) => ([...arr].sort((a, b) => a - b));

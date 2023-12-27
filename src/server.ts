@@ -1,6 +1,6 @@
-import { upgrade, enhance } from "./upgrade";
-import { showInfo } from "./utils";
+import { enhance } from "./upgrade";
 import { server, refinoInicial, refinoFinal, hammerByEnhance, numberOfCases, limit } from './info';
+import { showInfo } from "./utils";
 
 const data = enhance({
     server,
@@ -20,7 +20,8 @@ const data = enhance({
         blessedScroll: 0
     },
     hammerByEnhance,
-    numberOfCases
+    numberOfCases,
+    limit
 });
 
-// showInfo({ data, numberOfCases, limit });
+showInfo({ data, numberOfCases, limit });

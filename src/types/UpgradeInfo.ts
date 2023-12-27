@@ -21,5 +21,6 @@ export interface UpgradeInfo {
         eleven: boolean,
         twelve: boolean
     },
-    numberOfCases: number
+    numberOfCases: number,
+    limit: number
 }
