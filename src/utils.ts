@@ -28,7 +28,7 @@ export function getPercentAboveXInFluorite(fluoriteValues: number[], nLimit: num
 
 export function showInfo({ data, numberOfCases, limit }: ShowInfoType) {
     const fluoriteValues = data.map(item => item.fluorite);
-    const blessedValues = data.map(item => item.blessed);
+    const blessedValues = data.map(item => item.blessedScroll);
     const crystalValues = data.map(item => item.crystal);
 
     console.log(EServer.OFFICIAL ? "SERVER OFICIAL" : "SERVER PIRATA")
