@@ -59,7 +59,7 @@ export function enhance(props: UpgradeInfo) {
             const blessedTotal = data.reduce((total, item) => total + item.blessedScroll, 0);
             const crystalTotal = data.reduce((total, item) => total + item.crystal, 0);
 
-            caseSummaries.push({ case: i, fluorite: fluoriteTotal, blessed: blessedTotal, crystal: crystalTotal });
+            caseSummaries.push({ case: i, fluorite: fluoriteTotal, blessedScroll: blessedTotal, crystal: crystalTotal });
         }
 
         return caseSummaries;

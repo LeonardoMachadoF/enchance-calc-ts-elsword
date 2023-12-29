@@ -1,10 +1,7 @@
+import { InfoDTO } from "./InfoDTO";
+
 export type ShowInfoType = {
-    data: {
-        case: number;
-        fluorite: number;
-        blessed: number;
-        crystal: number;
-    }[],
+    data: InfoDTO[],
     numberOfCases: number;
     limit: number;
 }
