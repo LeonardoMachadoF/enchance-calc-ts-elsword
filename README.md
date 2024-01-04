@@ -1,1 +1,1 @@
-Caluladora feita com base no jogo "Elsword", para simular o gasto do sistema de refino do jogo, para ver os gastos, todas informações relacionadas ao objetivo do refino devem ser colocadas no arquivo "src/info.ts".
+Informações relacionadas ao objetivo do refino devem ser colocadas no arquivo "src/info.ts".
