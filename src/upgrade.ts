@@ -6,11 +6,14 @@ const destroyToNineChance = 0.2;
 const destroyToTenChance = 0.25;
 const destroyToElevenChance = 0.353;
 const destroyToTwelveChance = 0.25;
+const destroyToThirteenChance = 0.29;
 const downgradeToElevenChance = 0.27;
+const downgradeToThirteenChance = 0.27;
 let upgradeToNineChance = 0.021;
 let upgradeToTenChance = 0.0105;
 let upgradeToElevenChance = 0.007;
 let upgradeToTwelveChance = 0.0105;
+let upgradeToThirteenChance = 0.0105;
 
 
 export function enhance(props: UpgradeInfo) {
@@ -39,6 +42,12 @@ export function enhance(props: UpgradeInfo) {
             destroyChance: destroyToTwelveChance,
             downgradeChance: downgradeToElevenChance
         },
+        13: {
+            to: 'thirteen',
+            upgradeChance: upgradeToTwelveChance,
+            destroyChance: destroyToTwelveChance,
+            downgradeChance: downgradeToElevenChance
+        }
     }
 
     for (let i = 0; i < props.numberOfCases; i++) {

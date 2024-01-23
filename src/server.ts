@@ -12,7 +12,8 @@ const data = enhance({
         nine: [],
         ten: [],
         eleven: [],
-        twelve: []
+        twelve: [],
+        thirteen: []
     },
     resources: {
         fluorite: 0,

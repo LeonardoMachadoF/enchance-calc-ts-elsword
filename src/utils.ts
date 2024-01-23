@@ -42,9 +42,10 @@ export function showInfo({ data, numberOfCases, limit }: ShowInfoType) {
     const sortedArray = sortArray(fluoriteValues);
     const minValue = sortedArray[0];
     const maxValue = sortedArray[sortedArray.length - 1];
+    console.log(data.find(item => item.fluorite === minValue))
+    console.log(data.find(item => item.fluorite === sortedArray[Math.floor(sortedArray.length / 2)]))
+    console.log(data.find(item => item.fluorite === maxValue))
 
-    console.log('Minimo:', minValue);
-    console.log("Máximo:", maxValue);
     console.log("Numero de simunações:", numberOfCases);
 
     console.log(`Gastaram mais do que ${limit} fluoritas (em %): ` + getPercentAboveXInFluorite(fluoriteValues, limit || 0).toFixed(2));

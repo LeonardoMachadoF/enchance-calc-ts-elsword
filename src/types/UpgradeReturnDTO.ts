@@ -5,4 +5,5 @@ export interface UpgradeResultInfo {
     ten: InfoDTO[];
     eleven: InfoDTO[];
     twelve: InfoDTO[];
+    thirteen: InfoDTO[];
 };
