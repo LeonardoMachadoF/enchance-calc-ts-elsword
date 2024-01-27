@@ -44,9 +44,9 @@ export function enhance(props: UpgradeInfo) {
         },
         13: {
             to: 'thirteen',
-            upgradeChance: upgradeToTwelveChance,
-            destroyChance: destroyToTwelveChance,
-            downgradeChance: downgradeToElevenChance
+            upgradeChance: upgradeToThirteenChance,
+            destroyChance: destroyToThirteenChance,
+            downgradeChance: downgradeToThirteenChance
         }
     }
 
