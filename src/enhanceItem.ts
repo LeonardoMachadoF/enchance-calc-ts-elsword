@@ -8,7 +8,7 @@ export function enhanceItem({ props, options, caso }: { props: UpgradeInfo, opti
         let upgradeChance = options[props.enhance.now! + 1 as AllowedRefinesFinal].upgradeChance;
         let downgradeChance = options[props.enhance.now! + 1 as AllowedRefinesFinal].downgradeChance;
         let destroyChance = options[props.enhance.now! + 1 as AllowedRefinesFinal].destroyChance;
-        let hammer = props.hammerByEnhance[options[props.enhance.now! + 1 as AllowedRefinesFinal].to as 'nine' | 'ten' | 'eleven' | 'twelve'];
+        let hammer = props.hammerUsageByEnhance[options[props.enhance.now! + 1 as AllowedRefinesFinal].to as 'nine' | 'ten' | 'eleven' | 'twelve'];
 
         if (hammer) upgradeChance = upgradeChance * 2;
         props.enhance.now === 11 ? props.resources.crystal++ : props.resources.fluorite++;

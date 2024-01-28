@@ -50,7 +50,7 @@ export function enhance(props: UpgradeInfo) {
         }
     }
 
-    for (let i = 0; i < props.numberOfCases; i++) {
+    for (let i = 0; i < props.numberOfSimulations; i++) {
         props.enhance.now = props.enhance.initial;
         enhanceItem({
             props,
@@ -62,7 +62,7 @@ export function enhance(props: UpgradeInfo) {
     function calculateTotals(chances: UpgradeResultInfo) {
         const caseSummaries = [];
 
-        for (let i = 0; i < props.numberOfCases; i++) {
+        for (let i = 0; i < props.numberOfSimulations; i++) {
             const data = chances.nine.concat(chances.ten).concat(chances.eleven).concat(chances.twelve).filter(item => item.case === i);
             const fluoriteTotal = data.reduce((total, item) => total + item.fluorite, 0);
             const blessedTotal = data.reduce((total, item) => total + item.blessedScroll, 0);

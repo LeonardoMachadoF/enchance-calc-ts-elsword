@@ -15,12 +15,12 @@ export interface UpgradeInfo {
         crystal: number,
         blessedScroll: number
     },
-    hammerByEnhance: {
+    hammerUsageByEnhance: {
         nine: boolean,
         ten: boolean,
         eleven: boolean,
         twelve: boolean
     },
-    numberOfCases: number,
-    limit: number
+    numberOfSimulations: number,
+    spentMoreFluoriteThan: number
 }

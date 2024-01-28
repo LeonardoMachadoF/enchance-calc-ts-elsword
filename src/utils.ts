@@ -26,7 +26,7 @@ export function getPercentAboveXInFluorite(fluoriteValues: number[], nLimit: num
     return porcentagemAcimaDoLimite;
 }
 
-export function showInfo({ data, numberOfCases, limit }: ShowInfoType) {
+export function showInfo({ data, numberOfSimulations, spentMoreFluoriteThan }: ShowInfoType) {
     const fluoriteValues = data.map(item => item.fluorite);
     const blessedValues = data.map(item => item.blessedScroll);
     const crystalValues = data.map(item => item.crystal);
@@ -46,7 +46,7 @@ export function showInfo({ data, numberOfCases, limit }: ShowInfoType) {
     console.log(data.find(item => item.fluorite === sortedArray[Math.floor(sortedArray.length / 2)]))
     console.log(data.find(item => item.fluorite === maxValue))
 
-    console.log("Numero de simunações:", numberOfCases);
+    console.log("Numero de simunações:", numberOfSimulations);
 
-    console.log(`Gastaram mais do que ${limit} fluoritas (em %): ` + getPercentAboveXInFluorite(fluoriteValues, limit || 0).toFixed(2));
+    console.log(`Gastaram mais do que ${spentMoreFluoriteThan} fluoritas (em %): ` + getPercentAboveXInFluorite(fluoriteValues, spentMoreFluoriteThan || 0).toFixed(2));
 }

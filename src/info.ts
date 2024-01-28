@@ -2,14 +2,14 @@ import { EServer } from "./enums/EServer";
 import { AllowedRefines, AllowedRefinesFinal } from "./types/AllowedRefines";
 
 export const server = EServer.OFFICIAL;
-export const refinoInicial: AllowedRefines = 9;
-export const refinoFinal: AllowedRefinesFinal = 10;
-export const numberOfCases = 5000;
-export const hammerByEnhance = {
+export const refinoInicial: AllowedRefines = 10;
+export const refinoFinal: AllowedRefinesFinal = 11;
+export const numberOfSimulations = 5000;
+export const hammerUsageByEnhance = {
     nine: true,
     ten: true,
     eleven: true,
     twelve: true,
     thirteen: true
 }
-export const limit = 270;
+export const spentMoreFluoriteThan = 50;
