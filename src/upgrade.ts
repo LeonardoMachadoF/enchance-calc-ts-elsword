@@ -61,7 +61,7 @@ export function enhance(props: UpgradeInfo) {
     }
     console.timeEnd('tempoEnhanceItem');
 
-    console.time('tempoEnhanceItemCalculateTotals');
+    console.time('tempoEnhanceItemCalculateTotal');
     function calculateTotals(chances: UpgradeResultInfo) {
         const caseSummaries = [];
 
@@ -76,7 +76,7 @@ export function enhance(props: UpgradeInfo) {
 
         return caseSummaries;
     }
-    console.timeEnd('tempoEnhanceItemCalculateTotals');
+    console.timeEnd('tempoEnhanceItemCalculateTotal');
 
     return calculateTotals(props.allChances);
 }
