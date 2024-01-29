@@ -23,5 +23,11 @@ export type OptionType = {
         destroyChance: number;
         downgradeChance: number;
     };
+    13: {
+        to: string;
+        upgradeChance: number;
+        destroyChance: number;
+        downgradeChance: number;
+    };
 
 }

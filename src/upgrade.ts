@@ -6,11 +6,14 @@ const destroyToNineChance = 0.2;
 const destroyToTenChance = 0.25;
 const destroyToElevenChance = 0.353;
 const destroyToTwelveChance = 0.25;
+const destroyToThirteenChance = 0.29;
 const downgradeToElevenChance = 0.27;
+const downgradeToThirteenChance = 0.27;
 let upgradeToNineChance = 0.021;
 let upgradeToTenChance = 0.0105;
 let upgradeToElevenChance = 0.007;
 let upgradeToTwelveChance = 0.0105;
+let upgradeToThirteenChance = 0.0105;
 
 
 export function enhance(props: UpgradeInfo) {
@@ -39,9 +42,16 @@ export function enhance(props: UpgradeInfo) {
             destroyChance: destroyToTwelveChance,
             downgradeChance: downgradeToElevenChance
         },
+        13: {
+            to: 'thirteen',
+            upgradeChance: upgradeToThirteenChance,
+            destroyChance: destroyToThirteenChance,
+            downgradeChance: downgradeToThirteenChance
+        }
     }
 
-    for (let i = 0; i < props.numberOfCases; i++) {
+    console.time('tempoEnhanceItem');
+    for (let i = 0; i < props.numberOfSimulations; i++) {
         props.enhance.now = props.enhance.initial;
         enhanceItem({
             props,
@@ -49,11 +59,13 @@ export function enhance(props: UpgradeInfo) {
             caso: i
         })
     }
+    console.timeEnd('tempoEnhanceItem');
 
+    console.time('tempoEnhanceItemCalculateTotal');
     function calculateTotals(chances: UpgradeResultInfo) {
         const caseSummaries = [];
 
-        for (let i = 0; i < props.numberOfCases; i++) {
+        for (let i = 0; i < props.numberOfSimulations; i++) {
             const data = chances.nine.concat(chances.ten).concat(chances.eleven).concat(chances.twelve).filter(item => item.case === i);
             const fluoriteTotal = data.reduce((total, item) => total + item.fluorite, 0);
             const blessedTotal = data.reduce((total, item) => total + item.blessedScroll, 0);
@@ -64,6 +76,7 @@ export function enhance(props: UpgradeInfo) {
 
         return caseSummaries;
     }
+    console.timeEnd('tempoEnhanceItemCalculateTotal');
 
     return calculateTotals(props.allChances);
 }
