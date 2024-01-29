@@ -2,6 +2,7 @@ import { enhance } from "./upgrade";
 import { server, refinoInicial, refinoFinal, hammerUsageByEnhance, numberOfSimulations, spentMoreFluoriteThan } from './info';
 import { showInfo } from "./utils";
 
+console.time('tempoEnhanceItem22');
 const data = enhance({
     server,
     enhance: {
@@ -24,5 +25,6 @@ const data = enhance({
     numberOfSimulations,
     spentMoreFluoriteThan
 });
+console.timeEnd('tempoEnhanceItem22');
 
 showInfo({ data, numberOfSimulations, spentMoreFluoriteThan });

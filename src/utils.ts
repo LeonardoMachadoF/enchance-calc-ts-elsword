@@ -27,6 +27,7 @@ export function getPercentAboveXInFluorite(fluoriteValues: number[], nLimit: num
 }
 
 export function showInfo({ data, numberOfSimulations, spentMoreFluoriteThan }: ShowInfoType) {
+    console.time('tempoInfo');
     const fluoriteValues = data.map(item => item.fluorite);
     const blessedValues = data.map(item => item.blessedScroll);
     const crystalValues = data.map(item => item.crystal);
@@ -45,6 +46,8 @@ export function showInfo({ data, numberOfSimulations, spentMoreFluoriteThan }: S
     console.log(data.find(item => item.fluorite === minValue))
     console.log(data.find(item => item.fluorite === sortedArray[Math.floor(sortedArray.length / 2)]))
     console.log(data.find(item => item.fluorite === maxValue))
+
+    console.timeEnd('tempoInfo');
 
     console.log("Numero de simunações:", numberOfSimulations);
 

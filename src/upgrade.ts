@@ -50,6 +50,7 @@ export function enhance(props: UpgradeInfo) {
         }
     }
 
+    console.time('tempoEnhanceItem');
     for (let i = 0; i < props.numberOfSimulations; i++) {
         props.enhance.now = props.enhance.initial;
         enhanceItem({
@@ -58,7 +59,9 @@ export function enhance(props: UpgradeInfo) {
             caso: i
         })
     }
+    console.timeEnd('tempoEnhanceItem');
 
+    console.time('tempoEnhanceItemCalculateTotals');
     function calculateTotals(chances: UpgradeResultInfo) {
         const caseSummaries = [];
 
@@ -73,6 +76,7 @@ export function enhance(props: UpgradeInfo) {
 
         return caseSummaries;
     }
+    console.timeEnd('tempoEnhanceItemCalculateTotals');
 
     return calculateTotals(props.allChances);
 }
