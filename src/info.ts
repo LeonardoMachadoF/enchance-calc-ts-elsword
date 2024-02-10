@@ -5,11 +5,11 @@ export const server = EServer.OFFICIAL;
 
 export const refinoInicial: AllowedRefines = 10;
 export const refinoFinal: AllowedRefinesFinal = 11;
-export const numberOfSimulations = 50000;
+export const numberOfSimulations = 10000;
 export const hammerUsageByEnhance = {
     nine: true,
     ten: true,
-    eleven: true,
+    eleven: false,
     twelve: true,
     thirteen: true
 }
