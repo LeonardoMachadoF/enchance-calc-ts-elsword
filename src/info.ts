@@ -13,4 +13,4 @@ export const hammerUsageByEnhance = {
     twelve: true,
     thirteen: true
 }
-export const spentMoreFluoriteThan = 50;
+export const spentMoreFluoriteThan = 80;
