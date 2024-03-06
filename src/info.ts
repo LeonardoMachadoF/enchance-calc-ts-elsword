@@ -3,14 +3,14 @@ import { AllowedRefines, AllowedRefinesFinal } from "./types/AllowedRefines";
 
 export const server = EServer.OFFICIAL;
 
-export const refinoInicial: AllowedRefines = 10;
+export const refinoInicial: AllowedRefines = 9;
 export const refinoFinal: AllowedRefinesFinal = 11;
-export const numberOfSimulations = 10000;
+export const numberOfSimulations = 50000;
 export const hammerUsageByEnhance = {
     nine: true,
     ten: true,
-    eleven: false,
+    eleven: true,
     twelve: true,
     thirteen: true
 }
-export const spentMoreFluoriteThan = 80;
+export const spentMoreFluoriteThan = 810;

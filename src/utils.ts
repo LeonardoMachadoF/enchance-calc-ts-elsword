@@ -49,7 +49,7 @@ export function showInfo({ data, numberOfSimulations, spentMoreFluoriteThan }: S
 
     console.timeEnd('tempoInfo');
 
-    console.log("Numero de simunações:", numberOfSimulations);
+    console.log("Numero de simulações:", numberOfSimulations);
 
     console.log(`Gastaram mais do que ${spentMoreFluoriteThan} fluoritas (em %): ` + getPercentAboveXInFluorite(fluoriteValues, spentMoreFluoriteThan || 0).toFixed(2));
 }
