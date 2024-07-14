@@ -1,1 +1,1 @@
-Informações relacionadas ao objetivo do refino devem ser colocadas no arquivo "src/info.ts", e o resultado será exibido no console. //Finalizado (?)
+Informações relacionadas ao objetivo do refino devem ser colocadas no arquivo "src/info.ts", e o resultado será exibido no console. //Finalizado (?) (outdated, novo sistema de pity adicionado)
